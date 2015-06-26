@@ -28,17 +28,18 @@ def main():
     if not logs:
         print 'No logs found. Exiting...'
         return
-    while True:
-        try:
+    try:
+        while True:
             for log in logs:
+                print 'reading line'
                 line = log.readline()
                 if line:
                     log_path = log.name
                     send_update(log_path, line)
-        except KeyboardInterrupt:
-            print 'Exiting...'
-            CONNECTION.close()
-            return
+    except KeyboardInterrupt:
+        print 'Exiting...'
+        CONNECTION.close()
+        return
 
 
 def send_update(path, msg):
@@ -46,6 +47,7 @@ def send_update(path, msg):
     update = json.dumps(update)
     CHANNEL.basic_publish(exchange='', routing_key=ROUTING_KEY, body=update)
     print 'Sent "%s"' % update
+
 
 if __name__ == '__main__':
     try:
