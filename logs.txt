@@ -1,3 +1,5 @@
-/var/log/nova/nova.conf
+/var/log/nova/nova-manage.log
+/var/log/nova/nova-compute.log
+/var/log/nova/nova-api.log
 /var/log/neutron/neutron.conf
 /home/admin/test.txt

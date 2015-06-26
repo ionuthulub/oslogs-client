@@ -33,7 +33,6 @@ def main():
         while True:
             for log in logs:
                 line = log.readline()
-                print 'line: "%s"' % line
                 if line:
                     log_path = log.name
                     send_update(log_path, line)
