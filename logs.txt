@@ -1,0 +1,2 @@
+/var/log/nova/nova.conf
+/var/log/neutron/neutron.conf
