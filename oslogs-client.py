@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import json
 import os
+import time
 import traceback
 
 import pika
@@ -31,11 +32,12 @@ def main():
     try:
         while True:
             for log in logs:
-                print 'reading line'
                 line = log.readline()
+                print 'line: "%s"' % line
                 if line:
                     log_path = log.name
                     send_update(log_path, line)
+            time.sleep(0.1)
     except KeyboardInterrupt:
         print 'Exiting...'
         CONNECTION.close()
