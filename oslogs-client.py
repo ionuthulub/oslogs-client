@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import json
+import re
 import os
 import time
 import traceback
@@ -10,8 +11,16 @@ import pika
 HOSTNAME = os.uname()[1]
 QUEUE = ROUTING_KEY = 'oslogs'
 
+try:
+    fin = open('oslogs-client.conf', 'r')
+    AMQP_HOST = re.search('AMQP_HOST=(.*)', fin.read()).group(1).strip()
+    print 'AMQP_HOST found in config: "%s"' % AMQP_HOST
+except Exception, err:
+    print 'AMQP_HOST not found in config. Using "127.0.0.1"'
+    AMQP_HOST = '127.0.0.1'
+
 CONNECTION = pika.BlockingConnection(pika.ConnectionParameters(
-    host='192.168.37.100'))
+    host=AMQP_HOST))
 CHANNEL = CONNECTION.channel()
 CHANNEL.queue_declare(queue=QUEUE)
 
